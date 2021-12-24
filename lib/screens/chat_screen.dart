@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double testVal = 0;
     return Scaffold(
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -27,7 +28,14 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          FirebaseFirestore.instance
+              .collection('chats/CGKu2gatZwuyRlJxdSBG/messages')
+              .add({
+            'text': testVal.toString(),
+          });
+          ++testVal;
+        },
       ),
     );
   }
