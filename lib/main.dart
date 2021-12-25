@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Chat App Flutter',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
+        primarySwatch: Colors.orange,
         backgroundColor: Colors.grey,
-        primaryColor: Colors.orange,
+        primaryColor: Colors.deepOrange,
         accentColor: Colors.black54,
         accentColorBrightness: Brightness.dark,
         buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.orangeAccent,
+          buttonColor: Colors.orange,
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
