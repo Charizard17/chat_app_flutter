@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/auth_form.dart';
 
@@ -11,6 +12,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
+  var _isLoading = false;
 
   void _submitAuthForm(
     String email,
@@ -21,12 +23,22 @@ class _AuthScreenState extends State<AuthScreen> {
   ) async {
     UserCredential userCredential;
     try {
+      setState(() {
+        _isLoading = true;
+      });
       if (isLogin) {
         userCredential = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
       } else {
         userCredential = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .set({
+          'email': email,
+          'username': username,
+        });
       }
     } on PlatformException catch (error) {
       var message = 'An error occured, please check your credentials';
@@ -41,8 +53,20 @@ class _AuthScreenState extends State<AuthScreen> {
           backgroundColor: Theme.of(ctx).errorColor,
         ),
       );
+      setState(() {
+        _isLoading = false;
+      });
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
       print(error);
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(error.message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
     }
   }
 
@@ -51,7 +75,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
-        child: AuthForm(_submitAuthForm),
+        child: AuthForm(_submitAuthForm, _isLoading),
       ),
     );
   }
