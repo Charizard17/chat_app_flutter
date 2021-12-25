@@ -20,13 +20,23 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         backgroundColor: Colors.grey,
         primaryColor: Colors.orange,
-        accentColor: Colors.indigoAccent,
+        accentColor: Colors.black54,
         accentColorBrightness: Brightness.dark,
         buttonTheme: ButtonTheme.of(context).copyWith(
           buttonColor: Colors.orangeAccent,
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+        accentTextTheme: TextTheme(
+          headline1: TextStyle(
+            color: Colors.white,
           ),
         ),
       ),
