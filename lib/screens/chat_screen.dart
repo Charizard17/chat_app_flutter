@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
+    super.initState();
     final FirebaseMessaging fcm = FirebaseMessaging.instance;
     fcm.requestPermission(
       alert: true,
@@ -31,7 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
     });
-    super.initState();
   }
 
   @override
@@ -42,6 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text('Chat App Flutter'),
         actions: [
           DropdownButton(
+            underline: Container(),
             icon: Icon(
               Icons.more_vert,
               color: Theme.of(context).primaryIconTheme.color,
